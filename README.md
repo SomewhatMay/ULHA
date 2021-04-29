@@ -75,7 +75,7 @@ Deafult: 64
 Main Prime Number used for hashing.
 
 ### How to change settings
-```lua
+```
 require("ULHAMain")
 Uhash.hashSettings[index] =  value
 
