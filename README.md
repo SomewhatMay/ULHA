@@ -86,7 +86,7 @@ Uhash.hashSettings.HashLength =  128
 
 #### `hash()`
 ```lua
-Uhash:hash(string Data, string Salt (optional))
+Uhash:hash(string Data, string Salt [optional] )
 ```
 This function will return the ULHA hash of the data.
 
