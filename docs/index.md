@@ -1,37 +1,95 @@
-## Welcome to GitHub Pages
+# ULHA
 
-You can use the [editor on GitHub](https://github.com/SomewhatMay/ULHA/edit/gh-pages/docs/index.md) to maintain and preview the content for your website in Markdown files.
+This repo contains the Main Module (`ULHAMain.lua`). The module is hard to read unless you are experienced with lua (Sorry about that 😅)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This README.md file contains all the information you need to use this Library to create unique hashes for any data in [Lua 5.1+](https://www.lua.org/download.html)!
 
-### Markdown
+**This module requires you to have the [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua) library by [ennorehling](https://github.com/ennorehling). Download it there.**
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+*I do not own Lua.org, Lua, or [ennorehling](https://github.com/ennorehling)'s euler project [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua).*
+*The copyright notice in `ULHAMain.lua`, this permission notice, and any copyright notice in the bigNum.lua file shall be included in all copies or substantial portions of the Software.*
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+# Setup
+### Getting The Module
 ```
+require("ULHAMain")
+```
+This returns the main module for the UHAL library. The library name is `Uhash` You have settings to customize and the main method to call.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Call the hash function
+```
+require("ULHAMain")
 
-### Jekyll Themes
+local Uhash64 = Uhash:hash(string: Data) 
+--             ^^ Returns the ULHA64 (Deafults to 64 digits unless changed in settings)
+print(Uhash64) -- Printing the hash to the console.
+```
+Output: 64 digits of the hash (eg. `0000000000000000000000000000000000000000000000000000000000000000`)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SomewhatMay/ULHA/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Changing settings
 
-### Support or Contact
+#### `Data`
+```
+string Data (Optional)
+```
+Deafult data. (optional)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+#### `HashLength`
+```
+int HashLength 
+
+Deafult: 64
+```
+Length of the hashes.
+
+#### `LengthIgnore`
+```
+int LengthIgnore 
+
+Deafult: 8
+```
+Length of ignore when padded; this part states the original message length.
+
+#### `PrimeTableLength`
+```
+int PrimeTableLength 
+
+Deafult: 64
+```
+Virsitility of the primes; Max Value: 512; Min Value: 8.
+
+#### `UJumbleLength`
+```
+int UJumbleLength 
+
+Deafult: 48
+```
+Times hash is jumbled; make sure it isnt a multiple of HashLength.
+
+#### `MainPrimeNumber`
+```
+int MainPrimeNumber 
+
+Deafult: 64
+```
+Main Prime Number used for hashing.
+
+### How to change settings
+```
+require("ULHAMain")
+Uhash.hashSettings[index] =  value
+
+-- example:
+Uhash.hashSettings.HashLength =  128
+```
+*You can also change settings directly in the main file (`ULHAMain.lua`)*
+
+# API
+
+#### `hash()`
+```
+Uhash:hash(string Data, string Salt [optional] )
+```
+This function will return the ULHA hash of the data.
+
+Optionally, you can add a salt variable aswell that will modify the hash.
