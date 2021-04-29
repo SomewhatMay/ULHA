@@ -4,6 +4,8 @@ This repo contains the Main Module (`ULHAMain.lua`). The module is hard to read 
 
 This README.md file contains all the information you need to use this Library to create unique hashes for any data in [Lua 5.1+](https://www.lua.org/download.html)!
 
+**This module requires you to have the [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua) library by [ennorehling](https://github.com/ennorehling). Download it there.**
+
 *I do not own Lua.org, Lua, [ennorehling](https://github.com/ennorehling)'s euler project [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua).*
 *The above copyright notice, this permission notice, and any copyright notice in the bigNum.lua file shall be included in all copies or substantial portions of the Software.*
 
