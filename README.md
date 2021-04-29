@@ -11,13 +11,13 @@ This README.md file contains all the information you need to use this Library to
 
 # Setup
 ### Getting The Module
-```lua
+```
 require("ULHAMain")
 ```
 This returns the main module for the UHAL library. The library name is `Uhash` You have settings to customize and the main method to call.
 
 ### Call the hash function
-```lua
+```
 require("ULHAMain")
 
 local Uhash64 = Uhash:hash(string: Data) 
@@ -87,7 +87,7 @@ Uhash.hashSettings.HashLength =  128
 # API
 
 #### `hash()`
-```lua
+```
 Uhash:hash(string Data, string Salt [optional] )
 ```
 This function will return the ULHA hash of the data.
