@@ -204,8 +204,10 @@ end
 --// MAIN HASH FUNCTION \\--
 --========================--
 
-function Uhash:hash(str)
+function Uhash:hash(str, salt)
     str = str or Uhash.hashSettings.Data
+    salt = salt or ""
+    str = str..salt
     
     local _hash = BigNum.new(1)
     str = pad(str, padLength, lengthIgnore)
