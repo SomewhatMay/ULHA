@@ -10,29 +10,29 @@
     Github Link: https://www.github.com/
 
 
-    Required Libraries: 
+    Required Libraries:
         + BigNumModule.lua
 
     --=====--
 
-    License: 
+    License:
 
     Copyright 2021 SomewhatMay.
 
-    Permission is hereby granted, free of charge, to any person obtaining 
-    a copy of this software and associated documentation files (the "Software"), 
-    to deal in the Software without restriction, including without limitation the 
-    rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
-    sell copies of the Software, and to permit persons to whom the Software is 
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation the
+    rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+    sell copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall 
+    The above copyright notice and this permission notice shall
     be included in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-    INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
-    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR 
-    OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+    INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+    OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     --=====--
@@ -43,6 +43,7 @@
 
 --// Importing Required Libraries \\--
 
+package.path = "/usr/local/share/lua/5.2/?.lua;/usr/local/share/lua/5.2/?/init.lua;/usr/local/lib/lua/5.2/?.lua;/usr/local/lib/lua/5.2/?/init.lua;./?.lua;/usr/local/Documents/LuaProjects/?.lua"
 require("BigNumModule")
 
 --// Hash Settings \\--
@@ -50,10 +51,10 @@ require("BigNumModule")
 Uhash = {}
 Uhash.hashSettings = {
     Data = "Hello, World!";
-    HashLength = 64;
+    HashLength = 32;
     LengthIgnore = 8;
     PrimeTableLength = 64;
-    UJumbleLength = 48;
+    UJumbleLength = 31;
     MainPrimeNumber = 31;
 }
 
@@ -65,7 +66,7 @@ Uhash.hashSettings = {
 -- // Writing variables \\--
 
 local convStr = Uhash.hashSettings.Data or "Hello, World!"
-local ujumbleLength = Uhash.hashSettings.UJumbleLength or 48
+local ujumbleLength = Uhash.hashSettings.UJumbleLength or 31
 local g = Uhash.hashSettings.MainPrimeNumber or 31
 local primeTLength = Uhash.hashSettings.PrimeTableLength or 64
 local padLength = Uhash.hashSettings.HashLength or 32
@@ -131,13 +132,14 @@ end
 local function addCUBRand(num1, num2, num3)
     num1, num2, num3 = num1 + 1 or 1, num2 + 1 or 1, num3 + 1 or 1
     local num = num1 * num2 * num3
+    local num2 = (num1 * num3 - 1) * num2
     num = num%primeTLength
     local p = Uhash.First512Primes[tostring(num)]
 
     if not p then error("No prime value on index: "..num) end
 
-    num = num * (tonumber(getDec(p^(1/3))))
-    num = num%10
+    num2 = num2 * (tonumber(getDec(p^(1/3))))
+    num2 = num2%10
 
     return num
 end
@@ -188,6 +190,8 @@ local function reversePad(str, desLen)
                 _finish = _finish..r
             end
 
+            --print("", "", _index..": ".._finish)
+
             finish = _finish
         end
 
@@ -205,13 +209,20 @@ end
 --========================--
 
 function Uhash:hash(str, salt)
+    convStr = Uhash.hashSettings.Data or "Hello, World!"
+    ujumbleLength = Uhash.hashSettings.UJumbleLength or 31
+    g = Uhash.hashSettings.MainPrimeNumber or 31
+    primeTLength = Uhash.hashSettings.PrimeTableLength or 64
+    padLength = Uhash.hashSettings.HashLength or 32
+    lengthIgnore = Uhash.hashSettings.LengthIgnore or 8
+
     str = str or Uhash.hashSettings.Data
     salt = salt or ""
     str = str..salt
-    
+
     local _hash = BigNum.new(1)
     str = pad(str, padLength, lengthIgnore)
-    
+
     for i=1, #str, 1 do
         _hash = g * _hash + math.floor(string.byte(string.sub(str, i, i)) ^ 3 + .5)
     end
@@ -223,19 +234,14 @@ function Uhash:hash(str, salt)
     for i=1, ujumbleLength, 1 do
         _hash2 = ujumble(_hash2)
         _hash2 = shift(_hash2)
-        --print(i..": ".._hash2)
+        _hash2 = reversePad(_hash2, padLength)
+        --print("", i..": ".._hash2)
     end
 
-    _hash2 = reversePad(_hash, padLength)
+    _hash2 = reversePad(_hash2, padLength)
 
     return _hash2
 end
-
---// Debugging | Tests \\--
-
---local _hash = Uhash:hash("Hello, World!")
---print(_hash)
---io.read()
 
 Uhash.First512Primes = {
     ["0"] = 2,
@@ -753,5 +759,12 @@ Uhash.First512Primes = {
     ["512"] = 3673
 }
 
+
+
+--// Debugging | Tests \\--
+
+--local _hash = Uhash:hash("Hello, World!")
+--print(_hash)
+--io.read()
 
 return Uhash
