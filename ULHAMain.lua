@@ -43,6 +43,7 @@
 
 --// Importing Required Libraries \\--
 
+package.path = "/usr/local/share/lua/5.2/?.lua;/usr/local/share/lua/5.2/?/init.lua;/usr/local/lib/lua/5.2/?.lua;/usr/local/lib/lua/5.2/?/init.lua;./?.lua;/usr/local/Documents/LuaProjects/?.lua"
 require("BigNumModule")
 
 --// Hash Settings \\--
@@ -50,7 +51,7 @@ require("BigNumModule")
 Uhash = {}
 Uhash.hashSettings = {
     Data = "Hello, World!";
-    HashLength = 32;
+    HashLength = 64;
     LengthIgnore = 8;
     PrimeTableLength = 64;
     UJumbleLength = 31;
@@ -68,7 +69,7 @@ local convStr = Uhash.hashSettings.Data or "Hello, World!"
 local ujumbleLength = Uhash.hashSettings.UJumbleLength or 31
 local g = Uhash.hashSettings.MainPrimeNumber or 31
 local primeTLength = Uhash.hashSettings.PrimeTableLength or 64
-local padLength = Uhash.hashSettings.HashLength or 32
+local padLength = Uhash.hashSettings.HashLength or 64
 local lengthIgnore = Uhash.hashSettings.LengthIgnore or 8
 
 --// Reserving Memory For Frequent Functions \\--
@@ -212,7 +213,7 @@ function Uhash:hash(str, salt)
     ujumbleLength = Uhash.hashSettings.UJumbleLength or 31
     g = Uhash.hashSettings.MainPrimeNumber or 31
     primeTLength = Uhash.hashSettings.PrimeTableLength or 64
-    padLength = Uhash.hashSettings.HashLength or 32
+    padLength = Uhash.hashSettings.HashLength or 64
     lengthIgnore = Uhash.hashSettings.LengthIgnore or 8
 
     str = str or Uhash.hashSettings.Data
