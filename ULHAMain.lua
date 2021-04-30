@@ -43,7 +43,6 @@
 
 --// Importing Required Libraries \\--
 
-package.path = "/usr/local/share/lua/5.2/?.lua;/usr/local/share/lua/5.2/?/init.lua;/usr/local/lib/lua/5.2/?.lua;/usr/local/lib/lua/5.2/?/init.lua;./?.lua;/usr/local/Documents/LuaProjects/?.lua"
 require("BigNumModule")
 
 --// Hash Settings \\--
