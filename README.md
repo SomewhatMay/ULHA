@@ -6,7 +6,7 @@ This README.md file contains all the information you need to use this Library to
 
 **This module requires you to have the [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua) library by [ennorehling](https://github.com/ennorehling). Download it there.**
 
-*I do not own Lua.org, Lua, or [ennorehling](https://github.com/ennorehling)'s euler project [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua).*
+*I do not own [Lua.org](https://www.lua.org), Lua, or [ennorehling](https://github.com/ennorehling)'s euler project [BigNum.lua](https://github.com/ennorehling/euler/blob/master/BigNum.lua).*
 *The copyright notice in `ULHAMain.lua`, this permission notice, and any copyright notice in the bigNum.lua file shall be included in all copies or substantial portions of the Software.*
 
 # Setup
